@@ -29,6 +29,6 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      # Apply Terraform changes
-      - name: Terraform Apply
+      # Destroy the created resources
+      - name: Terraform Destroy
         run: terraform destroy -auto-approve
