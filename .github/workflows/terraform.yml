@@ -1,0 +1,33 @@
+name: Terraform Workflow
+
+# Trigger manually via the GitHub UI
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      # Initialize Terraform (downloads providers and recreates .terraform folder)
+      - name: Terraform Init
+        run: terraform init
+
+      # Plan the Terraform deployment
+      - name: Terraform Plan
+        run: terraform plan
+
+      # Apply the Terraform deployment
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
